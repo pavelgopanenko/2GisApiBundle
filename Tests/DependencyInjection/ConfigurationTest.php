@@ -9,15 +9,21 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
     public function testDefaultConfig()
     {
+        $config = $this->process();
+
+        $this->assertArrayHasKey('key', $config);
+        $this->assertArrayHasKey('class_map', $config);
+    }
+
+    public function testKeyConfig()
+    {
         $configs = array(
             'key' => 'test-key',
         );
 
         $config = $this->process($configs);
 
-        $this->assertArrayHasKey('key', $config);
         $this->assertEquals('test-key', $config['key']);
-        $this->assertEmpty($config['class_map']);
     }
 
     public function testClassMapConfig()
@@ -30,7 +36,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
         $config = $this->process($configs);
 
-        $this->assertArrayHasKey('class_map', $config);
         $this->assertEquals('\\Test\\Region', $config['class_map']['Region']);
     }
 
