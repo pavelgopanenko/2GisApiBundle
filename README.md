@@ -1,6 +1,9 @@
 Symfony2 Bundle для API 2GIS
 ============================
 
+[![Build Status](https://travis-ci.org/pavelgopanenko/2GisApiBundle.svg)](https://travis-ci.org/pavelgopanenko/2GisApiBundle)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pavelgopanenko/2GisApiBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/pavelgopanenko/2GisApiBundle/?branch=master)
+
 Бандл интеграции API 2GIS в проекты на основе Symfony2. Провайдер оборачивает компонент `2gis/api-client`.
 
 ## Установка

@@ -7,28 +7,24 @@ use Symfony\Component\Config\Definition\Processor;
 
 class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
-    public function testApiKey()
+    public function testDefaultConfig()
     {
         $configs = array(
-            array(
-                'key' => 'test',
-            ),
+            'key' => 'test-key',
         );
 
         $config = $this->process($configs);
 
         $this->assertArrayHasKey('key', $config);
-        $this->assertEquals('test', $config['key']);
+        $this->assertEquals('test-key', $config['key']);
+        $this->assertEmpty($config['class_map']);
     }
 
-    public function testClassMap()
+    public function testClassMapConfig()
     {
         $configs = array(
-            array(
-                'key'       => 'test',
-                'class_map' => array(
-                    'Region' => '\\Test\\Region',
-                ),
+            'class_map' => array(
+                'Region' => '\\Test\\Region',
             ),
         );
 
@@ -38,24 +34,13 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('\\Test\\Region', $config['class_map']['Region']);
     }
 
-    public function testEmptyClassMap()
+    protected function process(array $configs = array())
     {
-        $configs = array(
-            array(
-                'key' => 'test',
-            ),
-        );
-
-        $config = $this->process($configs);
-
-        $this->assertArrayHasKey('class_map', $config);
-        $this->assertEmpty($config['class_map']);
-    }
-
-    protected function process($configs)
-    {
+        if (empty($configs['key'])) {
+            $configs['key'] = 'test';
+        }
         $processor = new Processor();
 
-        return $processor->processConfiguration(new Configuration(), $configs);
+        return $processor->processConfiguration(new Configuration(), array($configs));
     }
 }

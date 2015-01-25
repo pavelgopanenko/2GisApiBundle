@@ -9,9 +9,7 @@ class DGisApiExtensionTest extends \PHPUnit_Framework_TestCase
 {
     public function testLoadWithDefault()
     {
-        $container = $this->getContainer(array(array(
-            'key' => 'test'
-        )));
+        $container = $this->createContainer();
 
         $this->assertTrue($container->hasDefinition('dgis_api.region'));
         $this->assertTrue($container->hasDefinition('dgis_api.catalog'));
@@ -21,9 +19,7 @@ class DGisApiExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testClientLoadArgument()
     {
-        $container = $this->getContainer(array(array(
-            'key' => 'test',
-        )));
+        $container = $this->createContainer();
 
         $definition = $container->getDefinition('dgis_api.connection');
 
@@ -32,23 +28,25 @@ class DGisApiExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testClassMapperLoadArgument()
     {
-        $container = $this->getContainer(array(array(
-            'key' => 'test',
-        )));
+        $container = $this->createContainer();
 
         $definition = $container->getDefinition('dgis_api.mapper_factory');
 
         $this->assertEquals('%dgis_api.class_map%', $definition->getArgument(0));
     }
 
-    protected function getContainer(array $config = array())
+    protected function createContainer(array $config = array())
     {
+        if (empty($config['key'])) {
+            $config['key'] = 'test';
+        }
+
         $container = new ContainerBuilder();
         $container->getCompilerPassConfig()->setOptimizationPasses(array());
         $container->getCompilerPassConfig()->setRemovingPasses(array());
 
         $loader = new DGisApiExtension();
-        $loader->load($config, $container);
+        $loader->load(array($config), $container);
         $container->compile();
 
         return $container;
