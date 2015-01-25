@@ -1,0 +1,31 @@
+{
+    "name": "2gis/api-symfony-bundle",
+    "license": "MIT",
+    "keywords": ["2gis", "api", "webapi"],
+    "type": "symfony-bundle",
+    "description": "Symfony Bundle for 2GIS Web API",
+    "authors": [
+        {
+            "name": "2GIS Ltd.",
+            "email": "api@2gis.ru",
+            "homepage": "http://api.2gis.ru/"
+        },
+        {
+            "name": "Pavel Gopanenko",
+            "email": "pavelgopanenko@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": "~2.0",
+        "2gis/api-client": "0.2-alpha"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.*"
+    },
+    "autoload": {
+        "psr-4": { "DGis\\Bundle\\ApiBundle\\": "./" }
+    },
+    "minimum-stability": "stable"
+}

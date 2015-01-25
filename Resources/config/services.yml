@@ -1,0 +1,35 @@
+---
+parameters:
+  dgis_api.connection.class: DGApiClient\ApiConnection
+  dgis_api.mapper_factory.class: DGApiClient\Mappers\MapperFactory
+  dgis_api.region.class: DGApiClient\Region
+  dgis_api.catalog.class: DGApiClient\Catalog
+  dgis_api.transport.class: DGApiClient\Transport
+  dgis_api.geo.class: DGApiClient\Geo
+
+services:
+  dgis_api.mapper_factory:
+    class: "%dgis_api.mapper_factory.class%"
+    arguments: [ %dgis_api.class_map% ]
+    public: false
+
+  dgis_api.connection:
+    class: "%dgis_api.connection.class%"
+    arguments: [ %dgis_api.key%, @logger ]
+    public: false
+
+  dgis_api.region:
+    class: "%dgis_api.region.class%"
+    arguments: [ @dgis_api.connection, @dgis_api.mapper_factory ]
+
+  dgis_api.catalog:
+    class: %dgis_api.catalog.class%
+    arguments: [ @dgis_api.connection, @dgis_api.mapper_factory ]
+
+  dgis_api.transport:
+    class: %dgis_api.transport.class%
+    arguments: [ @dgis_api.connection, @dgis_api.mapper_factory ]
+
+  dgis_api.geo:
+    class: %dgis_api.geo.class%
+    arguments: [ @dgis_api.connection, @dgis_api.mapper_factory ]
